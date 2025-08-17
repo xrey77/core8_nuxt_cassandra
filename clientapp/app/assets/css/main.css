@@ -1,0 +1,12 @@
+.logo {
+    width: 100px;
+    height: 40px;
+}
+
+.footer-size {
+    font-size: 12px;
+}
+
+#offcanvasWithBothOptions {
+    width: 50% !important;
+}

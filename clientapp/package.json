@@ -1,0 +1,27 @@
+{
+  "name": "clientapp",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "start": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^1.8.0",
+    "@types/axios": "^0.9.36",
+    "@types/jquery": "^2.0.68",
+    "axios": "^1.11.0",
+    "bootstrap": "^5.3.7",
+    "eslint": "^9.33.0",
+    "jquery": "^2.2.4",
+    "nuxt": "^4.0.3",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "nuxt-file-storage": "^0.3.0"
+  }
+}
