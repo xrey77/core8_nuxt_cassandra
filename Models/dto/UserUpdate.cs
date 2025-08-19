@@ -10,7 +10,5 @@ namespace core8_nuxt_cassandra.Models.dto
         public string Lastname { get; set; }
         public string Mobile { get; set; }
         public DateTime UpdatedAt { get; set; }
-    }
-
-    
+    }  
 }

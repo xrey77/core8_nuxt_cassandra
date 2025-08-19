@@ -2,7 +2,12 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint','@nuxt/image'],
+  modules: ['@nuxt/eslint','@nuxt/image','@vesp/nuxt-fontawesome'],
+  fontawesome: {
+    icons: {
+      solid: ['unlock','address-card','circle-info','cash-register','map-location'],
+    }
+  },
   nitro: {
     prerender: {
       crawlLinks: true,

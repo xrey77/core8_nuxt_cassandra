@@ -17,6 +17,7 @@
     "@types/axios": "^0.9.36",
     "@types/jquery": "^2.0.68",
     "@unhead/vue": "^2.0.14",
+    "@vesp/nuxt-fontawesome": "^2.0.0",
     "axios": "^1.11.0",
     "bootstrap": "^5.3.7",
     "eslint": "^9.33.0",
@@ -26,6 +27,9 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
+    "@fortawesome/free-regular-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "nuxt-file-storage": "^0.3.0",
     "sass": "^1.90.0",
     "sass-loader": "^16.0.5"

@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header bg-success">
-          <h1 class="modal-title fs-5 text-light" id="staticRegisterLabel">Register Account</h1>
+          <h1 class="modal-title fs-5 text-light" id="staticRegisterLabel"><font-awesome icon="address-card" class="text-yellow" />&nbsp;Register Account</h1>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">

@@ -5,7 +5,7 @@
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content">
       <div class="modal-header bg-primary">
-        <h1 class="modal-title fs-5 text-light" id="staticLoginLabel">User Login</h1>
+        <h1 class="modal-title fs-5 text-light" id="staticLoginLabel"><font-awesome icon="unlock" class="text-yellow" />&nbsp;User Login</h1>
         <button @click="closeLogin" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

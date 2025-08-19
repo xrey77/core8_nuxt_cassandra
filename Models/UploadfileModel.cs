@@ -6,7 +6,5 @@ namespace core8_nuxt_cassandra.Models
     public class UploadfileModel {
         public Guid Id { get; set; }
         public IFormFile Profilepic { get; set; }
-
-    }
-    
+    }    
 }

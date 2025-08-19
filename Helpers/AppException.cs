@@ -2,11 +2,9 @@ using System;
 using System.Globalization;
 
 namespace core8_nuxt_cassandra.Helpers
-{
-    
+{   
     public class AppException : Exception
     {
-
         public AppException(string message) : base(message) { }
 
         public AppException(string message, params object[] args) 
@@ -14,5 +12,4 @@ namespace core8_nuxt_cassandra.Helpers
         {
         }
     }
-
 }

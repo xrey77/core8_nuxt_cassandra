@@ -46,8 +46,7 @@ public class EmailService : IEmailService
                     
                     using var smtp = new SmtpClient();
                     try
-                    {
-                        //  await smtp.ConnectAsync("EmailSettings:SmtpServer", 465, SecureSocketOptions.SslOnConnect);
+                    {                        //  await smtp.ConnectAsync("EmailSettings:SmtpServer", 465, SecureSocketOptions.SslOnConnect);
                          await smtp.ConnectAsync("EmailSettings:SmtpServer", 587, SecureSocketOptions.StartTls);
                          await smtp.AuthenticateAsync(_configuration["EmailSettings:SenderEmail"], _configuration["EmailSettings:SenderPassword"]);
                          await smtp.SendAsync(message);

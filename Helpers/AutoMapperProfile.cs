@@ -15,9 +15,6 @@ namespace core8_nuxt_cassandra.Helpers
             CreateMap<UserPasswordUpdate, User>();
             CreateMap<Product, ProductModel>();
             CreateMap<ProductModel, Product>();
-
         }
-    }
-    
-
+    }    
 }

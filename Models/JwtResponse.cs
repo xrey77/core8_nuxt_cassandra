@@ -4,7 +4,5 @@ namespace core8_nuxt_cassandra.Models
         public string token { get; set; }
         public string user_name { get; set; }
         public int expires_in { get; set; }
-
     }
-
 }

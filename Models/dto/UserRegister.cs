@@ -16,5 +16,4 @@ namespace core8_nuxt_cassandra.Models.dto
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
-    
 }
