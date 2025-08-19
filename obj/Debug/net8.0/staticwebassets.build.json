@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Ef6zwtRHV3WNSULCKW6zl3DR93Nzf1p6LC6sQnqpWV8=",
+  "Hash": "lSJl6EyBV79G2N10HM0Sf+bLKB041i6Ho873V9llXcw=",
   "Source": "core8_nuxt_cassandra",
   "BasePath": "_content/core8_nuxt_cassandra",
   "Mode": "Default",
@@ -775,6 +775,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/products/9.png"
+    },
+    {
+      "Identity": "/Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/wwwroot/users/00be776860-4a7a-4a8f-9be2-c330873c07d9.jpg",
+      "SourceId": "core8_nuxt_cassandra",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/wwwroot/",
+      "BasePath": "_content/core8_nuxt_cassandra",
+      "RelativePath": "users/00be776860-4a7a-4a8f-9be2-c330873c07d9.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/users/00be776860-4a7a-4a8f-9be2-c330873c07d9.jpg"
     },
     {
       "Identity": "/Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/wwwroot/users/pix.png",

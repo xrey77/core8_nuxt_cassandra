@@ -89,7 +89,10 @@ namespace core8_nuxt_cassandra.Services
                 user.Email = row.GetValue<string>("email");              
                 user.Mobile = row.GetValue<string>("mobile");
                 user.UserName = row.GetValue<string>("username");
-                user.Secretkey = row.GetValue<string>("secretkey");   
+                user.Secretkey = row.GetValue<string>("secretkey");
+                user.Profilepic = row.GetValue<string>("profilepic");
+                user.Roles = row.GetValue<string>("roles");
+                user.Qrcodeurl = row.GetValue<string>("qrcodeurl");
             }
             return user;
         }
@@ -131,9 +134,8 @@ namespace core8_nuxt_cassandra.Services
 
         public async Task<bool> ActivateMfa(Guid id, bool opt, string qrcode_url)
         {
-            var preparedStatement = await session.PrepareAsync("SELECT * FROM core8.users WHERE id = ?");
-            var statement1 = preparedStatement.Bind(id);
-            var rowSet = await session.ExecuteAsync(statement1);
+            var preps = await session.PrepareAsync("SELECT * FROM core8.users WHERE id = ?");
+            var rowSet = await session.ExecuteAsync(preps.Bind(id));
             var row = rowSet.FirstOrDefault();
             if (row is not null) {                
                 var userQrcodeurl = "";

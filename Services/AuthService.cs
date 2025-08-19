@@ -40,7 +40,7 @@ namespace core8_nuxt_cassandra.Services
                     .Build();
 
                 session = cluster.Connect(config["CassandraSettings:Keyspace"]);
-                Console.WriteLine($"Connected to Cassandra...");            
+                // Console.WriteLine($"Connected to Cassandra...");            
             } catch(Exception ex) {
                 Console.WriteLine($"Failed to connect to Cassandra: {ex.Message}");            
             }
@@ -126,7 +126,8 @@ namespace core8_nuxt_cassandra.Services
                     userdata.Profilepic = row.GetValue<string>("profilepic");
                     userdata.Roles = row.GetValue<string>("roles");
                     userdata.Isactivated = row.GetValue<int>("isactivated");
-                    userdata.Isblocked = row.GetValue<int>("isblocked");       
+                    userdata.Isblocked = row.GetValue<int>("isblocked");     
+                    userdata.Qrcodeurl = row.GetValue<string>("qrcodeurl");     
                 }
                 return userdata;
             } catch(AppException ex) {

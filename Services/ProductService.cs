@@ -83,7 +83,7 @@ namespace core8_nuxt_cassandra.Services
 
         public async Task<int> TotPageSearch(int pg, string key) {
             var perpage = 5;
-            var cql = new SimpleStatement("SELECT COUNT(*) FROM core8.product WHERE descriptions LIKE ?", key+"%");
+            var cql = new SimpleStatement("SELECT COUNT(*) FROM core8.products WHERE descriptions LIKE ?", "%"+key+"%");
             var totrecs = await session.ExecuteAsync(cql,"profile1").ConfigureAwait(false);
 
             var row = totrecs.First();
@@ -99,7 +99,7 @@ namespace core8_nuxt_cassandra.Services
 
             try {
                 var prod = new List<Product>();
-                var stmt = new SimpleStatement("SELECT * FROM core8.product WHERE descriptions LIKE ?", key+"%");
+                var stmt = new SimpleStatement("SELECT * FROM core8.products WHERE descriptions LIKE ?", "%"+key+"%");
                 var rowSet = await session.ExecuteAsync(stmt, "profile1").ConfigureAwait(false);
                 foreach (var row in rowSet)
                 {

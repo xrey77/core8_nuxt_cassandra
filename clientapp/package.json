@@ -11,8 +11,12 @@
   },
   "dependencies": {
     "@nuxt/eslint": "^1.8.0",
+    "@nuxt/image": "^1.11.0",
+    "@nuxt/scripts": "^0.11.10",
+    "@popperjs/core": "^2.11.8",
     "@types/axios": "^0.9.36",
     "@types/jquery": "^2.0.68",
+    "@unhead/vue": "^2.0.14",
     "axios": "^1.11.0",
     "bootstrap": "^5.3.7",
     "eslint": "^9.33.0",
@@ -22,6 +26,8 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "nuxt-file-storage": "^0.3.0"
+    "nuxt-file-storage": "^0.3.0",
+    "sass": "^1.90.0",
+    "sass-loader": "^16.0.5"
   }
 }

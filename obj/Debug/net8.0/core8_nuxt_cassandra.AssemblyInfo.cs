@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("core8_nuxt_cassandra")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9522c6c52329f34962f73cbd28a152153129f687")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fee8f6feb3fa66d301f8aedc5e31f9a813f10e5c")]
 [assembly: System.Reflection.AssemblyProductAttribute("core8_nuxt_cassandra")]
 [assembly: System.Reflection.AssemblyTitleAttribute("core8_nuxt_cassandra")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

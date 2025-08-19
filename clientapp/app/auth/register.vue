@@ -33,8 +33,8 @@
                   <input type="password" v-model="regForm.password" required class="form-control mt-1" id="txtPassword" placeholder="enter Password">
                 </div>
               </div>
-              <button type="submit" class="btn btn-success mt-3">register</button>
-              <button type="reset" class="btn btn-danger">reset</button>
+              <button type="submit" class="btn btn-success mt-3 mx-2">register</button>
+              <button type="reset" class="btn btn-success mt-3">reset</button>
             </div>        
       
           </form>
@@ -52,10 +52,6 @@ import $ from 'jquery';
 import {reactive} from 'vue'
 import axios from 'axios';
 
-export interface User {
-  statuscode: number,
-  message: string
-}
 const api = axios.create({
     baseURL: "https://localhost:7100",
     headers: {'Accept': 'application/json',
@@ -79,37 +75,28 @@ const api = axios.create({
           regForm.mobile = '';
           regForm.username = '';
           regForm.password = '';
+          regForm.registerMsg = '';
           $("#regReset").click();
         }
 
         async function submitRegistration(e: any) {
             e.preventDefault();
-            $("#regMsg").text("please wait..");
+            regForm.registerMsg = "please wait..";
             const data =JSON.stringify({ 
               lastname: regForm.lastname, firstname: regForm.firstname,
               email: regForm.email, mobile: regForm.mobile,
               username: regForm.username, password: regForm.password });
             api.post("/signup", data)
             .then((res) => {
-                const data: User = res.data;
-                if (data.statuscode == 200) {
-                    regForm.registerMsg = data.message;
-                    return;
-                } else {
-                  regForm.registerMsg = data.message;
+                  regForm.registerMsg = res.data.message;
                   window.setTimeout(() => {
                     regForm.registerMsg = '';
                   }, 3000);
-                  return;
-                }
-              }, (error) => {
-                    regForm.registerMsg = error.message;
+            }, (error: any) => {
+                    regForm.registerMsg = error.response.data.message;
                     window.setTimeout(() => {
-                    this.registerMsg = '';
+                    regForm.registerMsg = '';
                   }, 3000);
-                  return;
             });
-
-            $("#registerReset").click();          
         }
 </script>

@@ -4,31 +4,31 @@
     <div class="card mt-3 mb-4">
 
         <div class="card-header">
-            USER PROFILE NO.&nbsp; {{userId}}
+            <h4>USER PROFILE</h4>
         </div>
 
         <div class="card-body">
         
-            <form @submit.prevent="submitProfileForm" enctype="multipart/form-data">
+            <form enctype="multipart/form-data">
             <div class="row">
                 <div class="col">
                        <div class="mb-3">
-                            <input type="text" v-model="user.firstname" required class="form-control" placeholder="enter First Name">
+                            <input type="text" v-model="userData.firstname" required class="form-control" placeholder="enter First Name">
                        </div>
                        <div class="mb-3">
-                            <input type="text" v-model="user.lastname" required class="form-control" placeholder="enter Last Name">
+                            <input type="text" v-model="userData.lastname" required class="form-control" placeholder="enter Last Name">
                        </div>
                        <div class="mb-3">
-                            <input type="email" v-model="user.email" class="form-control" :disabled="true">
+                            <input type="email" v-model="userData.email" class="form-control" :disabled="true">
                        </div>
                        <div class="mb-3">
-                            <input type="text" v-model="user.mobile" required class="form-control" placeholder="enter Mobile No.">
+                            <input type="text" v-model="userData.mobile" required class="form-control" placeholder="enter Mobile No.">
                        </div>                    
                 </div>
                 <div class="col">
 
                     <div class="mb-3 text-left">
-                        <img id="pix" class="userpic" :src="user.profilepic" alt="profilepic" />
+                        <img class="userpic" :src="userData.profilepic" alt="profilepic" />
                     </div>
                     <div class="mb-3 text-left">
                         <input @change="changeProfilepic" class="form-control form-control-sm" id="userpic" type="file" accept=".png, .jpg, .jpeg, .gif">
@@ -48,15 +48,16 @@
                     </div>
                     <div id="cpwd">
                           <div class="mb-3">
-                            <input type="password" class="form-control" v-model="user.password" placeholder="enter new Password" autocomplete="off">
+                            <input type="password" required class="form-control" v-model="userData.password" placeholder="enter new Password" autocomplete="off">
                           </div>
                           <div class="mb-3">
-                            <input type="password" class="form-control" v-model="user.confpassword" placeholder="confirm new Password" autocomplete="off">
+                            <input type="password" required class="form-control" v-model="userData.confpassword" placeholder="confirm new Password" autocomplete="off">
                           </div>
+                          <button @click="changePwd" type="button" class="btn btn-primary">change password</button>
                     </div>
                     <div id="mfa1">
-                        <div v-if="user.qrcodeurl">
-                            <img class="qrcode1" :src="user.qrcodeurl" alt="qrcodeurl"/>
+                        <div v-if="userData.qrcodeurl">
+                            <img class="qrcode1" :src="userData.qrcodeurl" alt="qrcodeurl"/>
                         </div>
                         <div v-else>
                             <img class="qrcode2" src="/images/qrcode.png" alt="QRCODE" />
@@ -86,11 +87,13 @@
                 </div>
 
             </div>
-            <button id="save" type="submit" class="btn btn-primary">save</button>
+                <div v-if="!userData.showSave">
+                    <button @click="submitProfileForm" id="save" type="submit" class="btn btn-primary">save</button>
+                </div>            
             </form>
         </div>
         <div class="card-footer text-danger fsize-12">
-            {{user.profileMsg}}
+            {{userData.profileMsg}}
         </div>
     </div>
 
@@ -98,16 +101,18 @@
 </template>
 
 <script setup lang="ts">
-    import nuxtStorage from 'nuxt-storage';
     import $ from 'jquery';
-    import {reactive, onMounted} from 'vue'
+    import { reloadNuxtApp } from '#app';
+    import {reactive, ref, onMounted} from 'vue'
+    import axios from 'axios';
 
-    const userId = nuxtStorage.localStorage.getData('USERID');
-    const username = nuxtStorage.localStorage.getData('USERNAME');
-    const userpic = nuxtStorage.localStorage.getData('USERPIC');
-    const token = nuxtStorage.localStorage.getData('TOKEN');
+    const api = axios.create({
+    baseURL: "https://localhost:7100",
+    headers: {'Accept': 'application/json',
+                'Content-Type': 'application/json'}
+    })
 
-    const user = reactive({
+    const userData = reactive({
         firstname: '',
         lastname: '',
         email: '',
@@ -116,107 +121,75 @@
         confpassword: '',
         profileMsg: 'loading, please wait..',
         qrcodeurl: '',
-        profilepic: ''
+        profilepic: '',
+        userId: '',
+        token: '',
+        showSave: false
     });
 
-    function checkIfImageExists(url: any, callback: any) {
-        const img = new Image();
-        img.src = url;
-
-        if (img.complete) {
-            callback(true);
-        } else {
-            img.onload = () => {
-                callback(true);
-            };
-
-            img.onerror = () => {
-                callback(false);
-            };
-        }
-    }
+    const selectedFile = ref<File | null>(null);
 
     async function fetchData(idno: any) {
-        const data = await $fetch(`/api/user/getbyid?id=${idno}`,{
-            headers: {
-                Authorization:`Bearer ${token}`
-            }
-        }).catch((error: any) => {
-            user.profileMsg = error;
-            return;
-        });
-        user.lastname = data.lastname;
-            user.firstname = data.firstname;
-            user.email = data.email;
-            user.mobile = data.mobile;
-            user.qrcodeurl = data.qrcodeurl;
-            checkIfImageExists(data.profilepic, (exists) => {
-                if (exists) {
-                    user.profilepic = data.profilepic;
-                } else {
-                    user.profilepic = '/users/pix.png';
-                }
-            });
-
-            user.profileMsg = '';
+        await api.get(`/api/getbyid/${idno}`, { headers: {
+            Authorization: `Bearer ${userData.token}`
+        }} )
+            .then((res: any) => {
+                userData.firstname = res.data.user.firstName;
+                userData.lastname = res.data.user.lastName;
+                userData.email = res.data.user.email;
+                userData.mobile = res.data.user.mobile;
+                userData.profilepic = res.data.user.profilepic;
+                userData.qrcodeurl = res.data.user.qrcodeurl;
+                userData.profileMsg = res.data.user.message;
+                    // $("#userpic").attr('src',user.profilepic);
+              }, (error: any) => {
+                    userData.profileMsg = error.response.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = "";
+                    },3000);
+            });                
     }
 
     onMounted(() => {
+        const _usrid = sessionStorage.getItem('USERID');
+        if (_usrid !== null) {
+            userData.userId = _usrid
+        } else {
+            userData.userId = '';
+        }
+        const _token = sessionStorage.getItem("TOKEN");
+        if (_token !== null) {
+            userData.token = _token
+        } else {
+            userData.token = '';
+        }
+
         $("#cpwd").hide();
         $("#mfa1").hide();
         $("#mfa2").hide();
-        fetchData(userId);
+        fetchData(userData.userId);
     });
 
     async function submitProfileForm(e: any) {
         e.preventDefault();
-        if (user.password !== '' && user.confpassword) {
-            if (user.password !== user.confpassword) {
-                user.profileMsg = "New Password does not matched.";
-                window.setTimeout(() => {
-                    user.profileMsg = "";
-                },3000);
-            }
-        }
-        else
-        {
-            user.profileMsg = 'please enter password';
-            window.setTimeout(() => {
-                user.profileMsg = "";
-            },3000);
-        }
+        userData.profileMsg = 'please wait...';
+        const data =JSON.stringify({ lastname: userData.lastname, 
+                firstname: userData.firstname, mobile: userData.mobile });
 
-        user.profileMsg = 'please wait...';
-        const userIdno = nuxtStorage.localStorage.getData('USERID');
-
-        const data = await $fetch('/api/user/updatebyid', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization:`Bearer ${token}`
-                },
-                method: 'POST',
-                body: {
-                  'id': userIdno,
-                  'firstname': user.firstname,
-                  'lastname': user.lastname,
-                  'password': user.password
-                }
-
-            }).catch( (error: any) => {
-                $("#regMsg").text(error.message);
-                window.setTimeout(() => {
-                    user.profileMsg = "";
-                },3000);
-                return;
-            });
-            if (data.statuscode === 200) {
-                    user.profileMsg = data.message;
-            } else {
-                user.profileMsg = data.message;
-            }
-            window.setTimeout(() => {
-                user.profileMsg = "";
-            },6000);            
+            await api.patch(`/api/updateprofile/${userData.userId}`, data, { headers: {
+            Authorization: `Bearer ${userData.token}`
+            }} )
+            .then((res: any) => {
+                    userData.profileMsg = res.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+              }, (error: any) => {
+                    userData.profileMsg = error.response.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+            }); 
     }
 
     function changePassword() {
@@ -225,10 +198,12 @@
         $("#mfa1").hide();
         $("#mfa2").hide();
         $('#twofactor').prop('checked', false);
+        userData.showSave = true;
      } else {
         $("#cpwd").hide();
-        user.password = '';
-        user.confpassword = '';
+        userData.password = '';
+        userData.confpassword = '';
+        userData.showSave = false;
      }
     }
 
@@ -238,74 +213,111 @@
             $("#mfa1").show();
             $("#mfa2").show();
             $('#changepwd').prop('checked', false);
+            userData.showSave = true;
         } else {
             $("#mfa1").hide();
             $("#mfa2").hide();
+            userData.showSave = false;
         }
     }
 
     async function enableMFA(e: any) {
         e.preventDefault();
-        const data = await $fetch('/api/user/enablemfa', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization:`Bearer ${token}`
-                },
-                method: 'POST',
-                body: {
-                    'id': userId,
-                    'isenabled': true,
-                    'fullname': user.firstname + ' ' + user.lastname
-                }
+        const data =JSON.stringify({ Twofactorenabled: true });
+            await api.patch(`/api/enablemfa/${userData.userId}`, data, { headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userData.token}`
+            }} )
+            .then((res: any) => {
+                userData.qrcodeurl = res.data.qrcode;
+                userData.profileMsg = res.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+              }, (error: any) => {
+                userData.profileMsg = error.response.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+            });        
+    }
 
-            }).catch( (error) => {
-                $("#regMsg").text(error.message);
-                window.setTimeout(() => {
-                    user.profileMsg = "";
-                },3000);
-                return;
-            });
-            if (data.statuscode === 200) {
-                    user.profileMsg = data.message;
-            } else {
-                user.profileMsg = data.message;
-            }
+    async function changePwd(e: any) {
+        e.preventDefault();
+        if (userData.password === '') {
+            userData.profileMsg = "Please enter new password.";
             window.setTimeout(() => {
-                user.profileMsg = "";
-                window.location.reload();
-            },6000);
+                    userData.profileMsg = "";
+                },3000);
+            return;
+        }
+        if (userData.confpassword === '') {
+            userData.profileMsg = "Please confirm new password.";
+            window.setTimeout(() => {
+                    userData.profileMsg = "";
+                },3000);
+            return;
+        }
+
+        if (userData.password !== '' && userData.confpassword) {
+            if (userData.password !== userData.confpassword) {
+                userData.profileMsg = "New Password does not matched.";
+                window.setTimeout(() => {
+                    userData.profileMsg = "";
+                },3000);
+            }
+        }
+        else
+        {
+            userData.profileMsg = 'please enter password';
+            window.setTimeout(() => {
+                userData.profileMsg = "";
+            },3000);
+        }
+        const data =JSON.stringify({ password: userData.password });
+            await api.patch(`/api/updatepassword/${userData.userId}`, data, { headers: {
+            Authorization: `Bearer ${userData.token}`
+            }} )
+            .then((res) => {
+                if (res.data.statuscode == 200) {
+                    userData.profileMsg = res.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+                    return;
+                } else {
+                    userData.profileMsg = res.data.message;
+                  window.setTimeout(() => {
+                    userData.profileMsg = '';
+                    }, 3000);
+                    return;
+                }
+              }, (error: any) => {
+                userData.profileMsg = error.response.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+            });
     }
 
     async function disableMFA(e: any) {
         e.preventDefault();
-        const data = await $fetch('/api/user/enablemfa', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization:`Bearer ${token}`
-                },
-                method: 'POST',
-                body: {
-                    'id': userId,
-                    'isenabled': false,
-                    'fullname': user.firstname + ' ' + user.lastname
-                }
-            }).catch( (error: any) => {
-                $("#regMsg").text(error.message);
-                window.setTimeout(() => {
-                    user.profileMsg = "";
-                },3000);
-                return;
-            });
-
-            if (data.statuscode === 200) {
-                    user.profileMsg = data.message;
-                    window.location.reload();
-            } else {
-                user.profileMsg = data.message;
-            }
-            window.setTimeout(() => {
-                user.profileMsg = "";
-            },3000);            
+        const data =JSON.stringify({ Twofactorenabled: false });
+            await api.patch(`/api/enablemfa/${userData.userId}`, data, { headers: {
+                Authorization: `Bearer ${userData.token}`
+            }} )
+            .then((res: any) => {
+                userData.qrcodeurl = '';
+                userData.profileMsg = res.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+              }, (error: any) => {
+                userData.profileMsg = error.response.data.message;
+                    window.setTimeout(() => {
+                        userData.profileMsg = '';
+                    }, 3000);
+            });              
     }
 
     async function changeProfilepic(event: any) {
@@ -314,32 +326,36 @@
         const formdata = new FormData();
         formdata.append('myImage', file);
 
-        const data = await $fetch(`/api/user/changeprofilepic?id=${userId}`, {
-                headers: {
-                    Authorization:`Bearer ${token}`
-                },
-                body: formdata,
-                method: 'POST',
-
-            }).catch( (error: any) => {
-                $("#regMsg").text(error.message);
-                window.setTimeout(() => {
-                    user.profileMsg = "";
-                },3000);
-                return;
-            });
-
-            if (data.statuscode === 200) {
-                    user.profileMsg = data.message;
-                    nuxtStorage.localStorage.setData('USERPIC', data.profilepic, 4, 'h');
-                } else {
-                    user.profileMsg = data.message;
-                }
-                window.setTimeout(() => {
-                    user.profileMsg = "";
-                },3000);
-    
+        const target = event.target as HTMLInputElement;
+            if (target.files && target.files.length > 0) {
+                selectedFile.value = target.files[0];
+                $("#userpic").attr('src',URL.createObjectURL(selectedFile.value));
             }
+
+            if (selectedFile.value) {
+                let formdata = new FormData();
+                formdata.append('Id', userData.userId);
+                formdata.append('Profilepic', selectedFile.value);
+
+                await api.post("/api/uploadpicture", formdata, { headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${userData.token}`
+                }} )
+                .then((res: any) => {
+                        userData.profileMsg = res.data.message;
+                        window.setTimeout(() => {
+                            sessionStorage.setItem('USERPIC',res.data.profilepic);
+                            userData.profileMsg = '';
+                            reloadNuxtApp({path: '/'})
+                        }, 3000);
+                }, (error: any) => {
+                    userData.profileMsg = error.response.data.message;
+                        window.setTimeout(() => {
+                            userData.profileMsg = '';
+                        }, 3000);
+                });
+            }
+        }
 </script>
 
 <style scoped>

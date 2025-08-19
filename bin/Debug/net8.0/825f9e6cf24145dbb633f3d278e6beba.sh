@@ -15,16 +15,16 @@ function list_child_processes () {
     fi;
 }
 
-ps 3517;
+ps 51925;
 while [ $? -eq 0 ];
 do
   sleep 1;
-  ps 3517 > /dev/null;
+  ps 51925 > /dev/null;
 done;
 
-for child in $(list_child_processes 3519);
+for child in $(list_child_processes 51928);
 do
   echo killing $child;
   kill -s KILL $child;
 done;
-rm /Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/bin/Debug/net8.0/c9b89a4b30af4f8ea321c08f847936a7.sh;
+rm /Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/bin/Debug/net8.0/825f9e6cf24145dbb633f3d278e6beba.sh;

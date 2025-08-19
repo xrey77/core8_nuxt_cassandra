@@ -61,7 +61,6 @@ namespace core8_nuxt_cassandra.Controllers.Users
                 }
 
             } else {
-                Console.WriteLine("Disable...");
                 await _userService.ActivateMfa(id, false, null);
                 return Ok(new {statuscode = 200, message="2-Factor Authenticator has been disabled."});
             }

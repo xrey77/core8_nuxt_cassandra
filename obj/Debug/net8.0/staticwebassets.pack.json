@@ -161,6 +161,10 @@
       "PackagePath": "staticwebassets/products/9.png"
     },
     {
+      "Id": "/Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/wwwroot/users/00be776860-4a7a-4a8f-9be2-c330873c07d9.jpg",
+      "PackagePath": "staticwebassets/users/00be776860-4a7a-4a8f-9be2-c330873c07d9.jpg"
+    },
+    {
       "Id": "/Users/reynald/My-Programs/DotnetCore/core8_nuxt_cassandra/wwwroot/users/pix.png",
       "PackagePath": "staticwebassets/users/pix.png"
     },
