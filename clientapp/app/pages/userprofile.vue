@@ -1,8 +1,6 @@
 <template>
 <div class="container">
-
     <div class="card mt-3 mb-4">
-
         <div class="card-header">
             <h4>USER PROFILE</h4>
         </div>

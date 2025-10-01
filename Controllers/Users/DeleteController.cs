@@ -49,7 +49,7 @@ namespace core8_nuxt_cassandra.Controllers.Users
                 if (user != false){
                     return Ok(new { statuscode = 200, message = "Successfully Deleted."});                
                 } else {
-                    return BadRequest(new { statuscode = 400, message = "User Id not found" });
+                    return NotFound(new { statuscode = 404, message = "User Id not found" });
                 }
            }
             catch (Cassandra.NoHostAvailableException)

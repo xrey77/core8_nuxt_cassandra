@@ -57,7 +57,7 @@ namespace core8_nuxt_cassandra.Controllers.Users
                         message="2-Factor Authenticator has been enabled.",
                         qrcode=imageUrl});
                 } else {
-                    return BadRequest(new {statuscode = 400, message="User not found."});
+                    return NotFound(new {statuscode = 404, message="User not found."});
                 }
 
             } else {
