@@ -49,11 +49,11 @@ namespace core8_nuxt_cassandra.Controllers.Users
                    await _userService.ActivateUser(id);
                     //SEND ACTIONVATION CONFIRMATION
                   await _emailService.sendMail(email, subj, htmlmsg);
-                return Ok(new {statuscode = 200, message = "Your Account is activated successfully."});
+                return Ok(new {message = "Your Account is activated successfully."});
             }
             catch (AppException ex)
             {
-                return BadRequest(new { statuscode = 400, message = ex.Message });
+                return BadRequest(new { message = ex.Message });
             }
         }
 

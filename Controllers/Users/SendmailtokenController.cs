@@ -49,12 +49,12 @@ namespace core8_nuxt_cassandra.Controllers.Users
             string msg = "Copy paste this mail token " + retVal.ToString();
             await _emailService.sendMail(email, subj, msg);
             if (retVal != 0) {
-               return Ok(new {statuscode = 200, message = "Mail Token has been sent to " + email + " , please check Email Inbox."});
+               return Ok(new {message = "Mail Token has been sent to " + email + " , please check Email Inbox."});
             } else {
-                return BadRequest(new {statuscode = 400, message = "Unable to send Mail token."});
+                return BadRequest(new {message = "Unable to send Mail token."});
             }
         } catch(Exception ex) {
-            return BadRequest(new {statuscode = 400, message = ex.Message});
+            return BadRequest(new {message = ex.Message});
         }        
     }   
     }

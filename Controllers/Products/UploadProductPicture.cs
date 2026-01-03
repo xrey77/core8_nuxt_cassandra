@@ -67,10 +67,10 @@ namespace core8_nuxt_cassandra.Controllers.Products
                     }
                     catch (Exception ex)
                     {
-                        return BadRequest(new {statuscode = 400, message =ex.Message});
+                        return BadRequest(new {message =ex.Message});
                     }
                 }
-                return NotFound(new { statuscode = 404, message = "Profile Picture not found."});
+                return NotFound(new { message = "Profile Picture not found."});
         }
     }    
 }

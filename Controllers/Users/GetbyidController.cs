@@ -37,9 +37,9 @@ namespace core8_nuxt_cassandra.Controllers.Users {
                 Console.WriteLine("USER ID :", id);
                 var user = _userService.GetById(id);
                 var model = _mapper.Map<UserModel>(user);
-                return Ok(new {statuscode = 200,message = "User found, please wait.",user = model});
+                return Ok(new {message = "User found, please wait.",user = model});
             } catch(AppException ex) {
-                return BadRequest(new {statuscode = 400, message = ex.Message});
+                return BadRequest(new {message = ex.Message});
             }
         }
     }

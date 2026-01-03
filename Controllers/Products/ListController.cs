@@ -43,7 +43,7 @@ namespace core8_nuxt_cassandra.Controllers.Products
                 var model = _mapper.Map<IList<ProductModel>>(products);
                 return Ok(new {totpage = totalpage, page = page, products=model});
             } catch(AppException ex) {
-               return BadRequest(new {statuscode = 400, Message = ex.Message});
+               return BadRequest(new {message = ex.Message});
             }
         }
     }    

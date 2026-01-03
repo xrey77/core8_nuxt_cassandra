@@ -86,7 +86,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddCors();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJWTTokenServices, JWTServiceManage>();
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSpaStaticFiles(configuration =>
             {

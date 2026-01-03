@@ -81,7 +81,11 @@ export interface Products {
                 vardata.totpage = data.totpage;
                 vardata.page = data.page;
             }, (error: any) => {
-                vardata.listMsg = error.response.data.message;
+                if (error.response) {
+                    vardata.listMsg = error.response.data.message;
+                } else {
+                    vardata.listMsg = error.message;
+                }
                 window.setTimeout(() => {
                     vardata.listMsg = '';
                 }, 3000);

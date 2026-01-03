@@ -91,7 +91,11 @@ async function submitLogin(e: any) {
             }
             return;
         }, (error: any) => {
-            formData.loginMessage = error.response.data.message;
+            if (error.response) {
+              formData.loginMessage = error.response.data.message;
+            } else {
+              formData.loginMessage = error.message;
+            }
             window.setTimeout(() => {
                 formData.loginMessage = '';
                 formData.password = '';

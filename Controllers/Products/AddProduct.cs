@@ -56,9 +56,9 @@ namespace core8_nuxt_cassandra.Controllers.Products
                 prods.CriticalStocks = model.CriticalStocks;
                 prods.CreatedAt = now;
                 await _productService.CreateProduct(prods);
-                return Ok(new {statuscode = 200, message = "New product has been added to the database."});
+                return Ok(new {message = "New product has been added to the database."});
             } catch(AppException ex) {
-               return BadRequest(new {statuscode = 400, Message = ex.Message});
+               return BadRequest(new { message = ex.Message});
             }
         }
     }    

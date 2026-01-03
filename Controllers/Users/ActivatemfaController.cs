@@ -53,16 +53,15 @@ namespace core8_nuxt_cassandra.Controllers.Users
                     var imageUrl = setupInfo.QrCodeSetupImageUrl;
                     await _userService.ActivateMfa(id, true, imageUrl);
                     return Ok(new {
-                        statuscode = 200, 
                         message="2-Factor Authenticator has been enabled.",
                         qrcode=imageUrl});
                 } else {
-                    return NotFound(new {statuscode = 404, message="User not found."});
+                    return NotFound(new {message="User not found."});
                 }
 
             } else {
                 await _userService.ActivateMfa(id, false, null);
-                return Ok(new {statuscode = 200, message="2-Factor Authenticator has been disabled."});
+                return Ok(new {message="2-Factor Authenticator has been disabled."});
             }
         }
     }    

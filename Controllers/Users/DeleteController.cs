@@ -47,14 +47,14 @@ namespace core8_nuxt_cassandra.Controllers.Users
                 var user = await _userService.Delete(id);
                 Console.WriteLine("May Error : ", user);
                 if (user != false){
-                    return Ok(new { statuscode = 200, message = "Successfully Deleted."});                
+                    return Ok(new { message = "Successfully Deleted."});                
                 } else {
-                    return NotFound(new { statuscode = 404, message = "User Id not found" });
+                    return NotFound(new { message = "User Id not found" });
                 }
            }
             catch (Cassandra.NoHostAvailableException)
             {               
-                return BadRequest(new { statuscode = 400, message = "Server down.." });
+                return BadRequest(new { message = "Server down.." });
             }
         }
     }

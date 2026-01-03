@@ -67,10 +67,9 @@
 
   const formatNumberWithCommaDecimal = (number: any) => {
     const formatter = new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2, // Ensures at least two decimal places
-      maximumFractionDigits: 2, // Limits to two decimal places
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     });
-    // Format the number
     return formatter.format(number);
   };
 
@@ -86,7 +85,11 @@
                     vardata.listMsg = '';
                 }, (error: any) => {
                     vardata.isfound = false;
-                    vardata.listMsg = error.response.data.message;
+                    if (error.response) {
+                      vardata.listMsg = error.response.data.message;
+                    } else {
+                      vardata.listMsg = error.message;
+                    }
                 });    
   }
 

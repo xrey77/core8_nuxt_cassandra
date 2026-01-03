@@ -77,7 +77,6 @@ public class LoginController : ControllerBase
 
 
                     return Ok(new { 
-                        statuscode = 200,
                         message = "Login Successfull..",
                         id = xuser.Id,
                         lastname = xuser.LastName,
@@ -91,12 +90,12 @@ public class LoginController : ControllerBase
                         token = tokenString
                         });
                  } else {
-                    return NotFound(new { statuscode = 404, message = "Username not found.."});
+                    return NotFound(new { message = "Username not found.."});
                  }
             }
             catch (AppException ex)
             {
-                return BadRequest(new {statuscode = 400, Message = ex.Message});
+                return BadRequest(new {Message = ex.Message});
             }
 
     }

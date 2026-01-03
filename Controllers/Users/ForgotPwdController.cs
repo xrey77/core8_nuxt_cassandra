@@ -70,7 +70,7 @@ namespace core8_nuxt_cassandra.Controllers.Users
            }
             catch (AppException ex)
             {
-                return BadRequest(new { statuscode = 400, message = ex.Message });
+                return BadRequest(new { message = ex.Message });
             }
 
         }

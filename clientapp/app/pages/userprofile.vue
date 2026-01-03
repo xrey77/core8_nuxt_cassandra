@@ -141,7 +141,11 @@
                 userData.profileMsg = res.data.user.message;
                     // $("#userpic").attr('src',user.profilepic);
               }, (error: any) => {
-                    userData.profileMsg = error.response.data.message;
+                    if (error.response) {
+                        userData.profileMsg = error.response.data.message;
+                    } else {
+                        userData.profileMsg = error.message;
+                    }
                     window.setTimeout(() => {
                         userData.profileMsg = "";
                     },3000);
@@ -183,7 +187,11 @@
                         userData.profileMsg = '';
                     }, 3000);
               }, (error: any) => {
-                    userData.profileMsg = error.response.data.message;
+                    if (error.response) {
+                        userData.profileMsg = error.response.data.message;
+                    } else {
+                        userData.profileMsg = error.message;
+                    }
                     window.setTimeout(() => {
                         userData.profileMsg = '';
                     }, 3000);
@@ -233,7 +241,11 @@
                         userData.profileMsg = '';
                     }, 3000);
               }, (error: any) => {
-                userData.profileMsg = error.response.data.message;
+                    if (error.response) {
+                        userData.profileMsg = error.response.data.message;
+                    } else {
+                        userData.profileMsg = error.message;
+                    }
                     window.setTimeout(() => {
                         userData.profileMsg = '';
                     }, 3000);
@@ -291,7 +303,11 @@
                     return;
                 }
               }, (error: any) => {
-                userData.profileMsg = error.response.data.message;
+                    if (error.response) {
+                        userData.profileMsg = error.response.data.message;
+                    } else {
+                        userData.profileMsg = error.message;
+                    }                
                     window.setTimeout(() => {
                         userData.profileMsg = '';
                     }, 3000);
@@ -311,7 +327,11 @@
                         userData.profileMsg = '';
                     }, 3000);
               }, (error: any) => {
-                userData.profileMsg = error.response.data.message;
+                    if (error.response) {
+                        userData.profileMsg = error.response.data.message;
+                    } else {
+                        userData.profileMsg = error.message;
+                    }                
                     window.setTimeout(() => {
                         userData.profileMsg = '';
                     }, 3000);
@@ -347,7 +367,11 @@
                             reloadNuxtApp({path: '/'})
                         }, 3000);
                 }, (error: any) => {
-                    userData.profileMsg = error.response.data.message;
+                        if (error.response) {
+                            userData.profileMsg = error.response.data.message;
+                        } else {
+                            userData.profileMsg = error.message;
+                        }                    
                         window.setTimeout(() => {
                             userData.profileMsg = '';
                         }, 3000);

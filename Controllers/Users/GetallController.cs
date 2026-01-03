@@ -46,7 +46,7 @@ namespace core8_nuxt_cassandra.Controllers.Users
                 var model = _mapper.Map<IList<UserModel>>(user);
                 return Ok(model); 
             } catch(AppException ex) {
-                return BadRequest(new {statuscode = 400, Message = ex.Message});
+                return BadRequest(new { message = ex.Message});
             }
         }
     }

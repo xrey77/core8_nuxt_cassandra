@@ -59,10 +59,9 @@
 
 const formatNumberWithCommaDecimal = (number: any) => {
   const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2, // Ensures at least two decimal places
-    maximumFractionDigits: 2, // Limits to two decimal places
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
-  // Format the number
   return formatter.format(number);
 };
 
@@ -98,7 +97,11 @@ export interface Products {
                 vardata.totpage = data.totpage;
                 vardata.page = data.page;
             }, (error: any) => {
-                vardata.listMsg = error.response.data.message;
+                if (error.response) {
+                    vardata.listMsg = error.response.data.message;
+                } else {
+                    vardata.listMsg = error.message;
+                }
                 window.setTimeout(() => {
                     vardata.listMsg = '';
                 }, 3000);

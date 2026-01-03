@@ -93,7 +93,11 @@ const api = axios.create({
                     regForm.registerMsg = '';
                   }, 3000);
             }, (error: any) => {
-                    regForm.registerMsg = error.response.data.message;
+                    if (error.repsonse) {
+                      regForm.registerMsg = error.response.data.message;
+                    } else {
+                      regForm.registerMsg = error.message;
+                    }
                     window.setTimeout(() => {
                     regForm.registerMsg = '';
                   }, 3000);

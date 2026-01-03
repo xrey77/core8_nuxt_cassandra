@@ -71,7 +71,11 @@ const api = axios.create({
                     reloadNuxtApp({path: '/'});
                   }, 3000);
             }, (error: any) => {
-                mfaForm.Message = error.response.data.message;
+                    if (error.response){
+                        mfaForm.Message = error.response.data.message;
+                    } else {
+                        mfaForm.Message = error.message;
+                    }
                     window.setTimeout(() => {
                         mfaForm.isDisabled=false;
                         mfaForm.Message = '';
